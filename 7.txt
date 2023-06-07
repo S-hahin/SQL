@@ -1,0 +1,64 @@
+7. a: sum of natural numbers
+DECLARE
+x number(5);
+s number:=0;
+BEGIN
+x:=&x;
+ for i in 1..X
+loop
+s:=s+i;
+end loop;
+ dbms_output.put_line('Sum is' || s);
+END;
+/
+
+output:
+Enter value for st: 1
+old   8: st:=&st;
+new   8: st:=1;
+Enter value for ed: 10
+old   9: ed:=&ed;
+new   9: ed:=10;
+1
+2
+3
+4
+5
+7
+9
+b: prime numbers
+ DECLARE
+ st number(2);
+ ed number(2);
+ n number(2);
+ m number(2);
+ c number(20);
+ BEGIN
+ st:=&st;
+ ed:=&ed;
+ for n in st..ed
+ loop
+ c:=0;
+ for m in 1..n
+ loop
+ if mod(n,m)=0 then
+ c:=c+1;
+ end if;
+ end loop;
+ if c<=2 then
+ dbms_output.put_line(n);
+ end if;
+ end loop;
+ END;
+ /
+output:
+Enter value for st: 2
+old   8:  st:=&st;
+new   8:  st:=2;
+Enter value for ed: 10
+old   9:  ed:=&ed;
+new   9:  ed:=10;
+2
+3
+5
+7
