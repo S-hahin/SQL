@@ -1,0 +1,54 @@
+create table hotel(hotelid int,name varchar(20),no_of_days int,rate int,constraint ht primary key(hotelid));
+create table guest(gid int,gname varchar(20),no_of_days int,hid int,constraint gd primary key(gid),constraint hd foreign key(hid) references hotel (hotelid));
+insert into hotel values(1,'A',4,500);
+insert into hotel values(2,'B',3,1500);
+insert into hotel values(3,'C',2,1000);
+insert into hotel values(4,'D',1,400);
+
+insert into guest values(100,'reshma',1,1)
+insert into guest values(101,'shahin',1,3)
+insert into guest values(102,'ram',1,4)
+insert into guest values(103,'john',1,2)
+
+ DECLARE
+   r NUMBER(10);
+   CURSOR c IS
+     SELECT guest.*, hotel.rate
+     FROM guest, hotel
+     WHERE guest.hid = hotel.hotelid;
+   id guest.gid%TYPE;
+   name guest.gname%TYPE;
+   days guest.no_of_days%TYPE;
+   hid guest.hid%TYPE;
+   rate hotel.rate%TYPE;
+ BEGIN
+   OPEN c;
+   DBMS_OUTPUT.PUT_LINE('id ' || 'name ' || 'hid ' || 'rate');
+   LOOP
+     FETCH c INTO id, name, days, hid, rate;
+     EXIT WHEN c%NOTFOUND;
+     r := 0;
+     r := rate * days;
+     DBMS_OUTPUT.PUT_LINE(id || ' ' || name || ' ' || hid || ' ' || rate);
+   END LOOP;
+   CLOSE c;
+ END;
+ /
+  declare
+  cursor c1 is select 
+  * from hotel where rate > 500;
+  hid hotel.hotelid%type;
+  name hotel.name%type;
+  tr hotel.no_of_days%type;
+ rate hotel.rate%type;
+ begin
+ open c1;
+ dbms_output.put_line('hid '||'name'||'rooms'||'rate');
+ loop
+ fetch c1 into hid,name,tr,rate;
+ exit when c1%notfound;
+ dbms_output.put_line(hid||' '||name||' '||tr||' '||rate);
+ end loop;
+ close c1;
+ end;
+ /
