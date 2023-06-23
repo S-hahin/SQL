@@ -1,0 +1,33 @@
+-----------------------create table---------------------
+create table dep(deptid number(5),deptname varchar(10),dcity varchar(10),salary number(3),constraint dd primary key(deptid));
+insert into dep values(1,'mca','kollam',100);
+insert into dep values(2,'ec','tvm',200);
+insert into dep values(3,'bt','tvm',400);
+insert into dep values(4,'bca','tvm',900);
+
+------------------pl/sql--------------------------------------
+create or replace function details(id int)
+return number is fid number;
+cursor c3 is select * from dep where deptid=id;
+deptid number(5);
+deptname varchar(10);
+dcity varchar(10);
+salary number(3);
+begin
+open c3;
+dbms_output.put_line('deptid'||'deptname'||'dcity'||'salary');
+loop
+fetch c3 into deptid,deptname,dcity,salary;
+exit when c3%notfound;
+dbms_output.put_line(deptid||' '||deptname||' '||dcity||' '||salary);
+end loop;
+return fid;
+close c3;
+end;
+/
+
+-------------------output----------------------
+DETAILS(2)
+----------
+deptiddeptnamedcitysalary
+2 ec tvm 200

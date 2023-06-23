@@ -1,0 +1,32 @@
+--------------------------create table----------------------------
+create table deptt(dep_id int,d_name varchar(10),st_name varchar(10),st_id int,stcity varchar(10),desgn varchar(10),constraint dpp primary key(dep_id));
+
+insert into deptt values(1,'mca','rahul',100,'tvm','sweeper annan');
+------------------------pl/sql----------------------------------
+create or replace procedure designation(des varchar)
+is cursor c4 is select * from deptt where desgn=des;
+dep_id int;
+d_name varchar(10);
+st_name varchar(10);
+st_id int;
+stcity varchar(10);
+desgn varchar(10);
+begin 
+open c4;
+dbms_output.put_line('dep_id  '||'d_name  '||'st_name  '||'st_id  '||'stcity  '||'desgn  ');
+loop
+fetch c4 into dep_id,d_name,st_name,st_id,stcity,desgn;
+exit when c4%notfound;
+dbms_output.put_line(dep_id||'  '||d_name||'  '||st_name||'  '||st_id||'  '||stcity||'  '||desgn);
+end loop;
+close c4;
+end;
+/
+
+
+output::
+SQL> exec designation('hod');
+dep_id  d_name  st_name  st_id  stcity
+desgn
+1  mca  rahul  100  tvm
+ hod
