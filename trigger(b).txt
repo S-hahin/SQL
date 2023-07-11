@@ -1,0 +1,22 @@
+create table emp23(empid int,ename varchar(20),salaray int,designation varchar(20));
+
+ insert into emp23 values(1,'adithyan',1050,'prof');
+ insert into emp23 values(2,'shahin',1500,'police');
+
+     EMPID ENAME                   SALARAY DESIGNATION
+---------- -------------------- ---------- --------------------
+         1 adithyan                   1050 prof
+         2 shahin                     1500 police
+
+------------------view--------------------------------
+create or replace view empsalary as select salaray+salaray*10.5/100 as salaray,designation from emp23 where designation='prof';
+
+View created.
+
+---------------------output------------------------------------
+ select * from empsalary;
+
+   SALARAY DESIGNATION
+---------- --------------------
+   1160.25             prof
+  
