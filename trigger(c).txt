@@ -1,0 +1,66 @@
+---------------------------create table--------------------------------
+create table staff23(staffid int,name varchar(20),salary int);
+
+insert into staff23 values(1,'rahul',1500);
+
+----------------trigger---------------------------------
+CREATE OR REPLACE TRIGGER check_salary_trigger11
+ BEFORE INSERT ON staff23
+ FOR EACH ROW
+ DECLARE
+     old_salary NUMBER;
+ BEGIN
+     SELECT salary INTO old_salary
+     FROM staff23
+     WHERE staffid = :NEW.staffid;
+ 
+     IF :NEW.salary <= old_salary THEN
+         RAISE_APPLICATION_ERROR(-20001, 'New salary must be greater than the old salary.');
+     END IF;
+ 
+ END;
+ /
+
+
+Trigger created.
+--------------------------output-----------------------
+insert into staff23 values(1,'rahul',1000);
+
+ERROR at line 1:
+ORA-20001: New salary must be greater than the old salary.
+ORA-06512: at "DB57.CHECK_SALARY_TRIGGER11", line 9
+ORA-04088: error during execution of trigger 'DB57.CHECK_SALARY_TRIGGER11'
+
+
+
+
+
+
+
+create table stud99(
+ studid int,
+ name varchar(10),
+ depart varchar(5),
+ constraint sst primary key(studid));
+
+insert into stud99 values(1,'Anu','mca');
+insert into stud99 values(2,'Manu','mba');
+
+create or replace trigger trr11
+before insert on stud99
+referencing old as o new as n
+for each row
+declare
+m number(6);
+c  number(6);
+begin
+select count(studid) into  c from stud99;
+select max(studid) into m from stud99;
+if(c<>0)
+then
+:n.studid:=m+1;
+else
+:n.studid:=1;
+end if;
+end;
+/
