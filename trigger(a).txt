@@ -1,0 +1,29 @@
+---------------------table creation------------------------
+create table student23(id int primary key,sname varchar(20),age int,address varchar(20));
+
+insert into student23 values(1,'vineesha',21,'kollancode');
+
+--------------------------TRIGGER----------------------------------
+
+create or replace trigger trr98
+before insert on student23
+referencing old as o new as n
+for each row
+declare
+c  number(6);
+begin
+select count(id) into  c from student23;
+if(c>0)
+then
+:n.id:=c+1;
+else
+:n.id:=1;
+end if;
+end;
+/
+---------------------------QUERY-----------------------------------------
+
+insert into student23 (sname, age, address) values('sheena',21,'poontura');
+
+------------op---------
+select * from student23;
